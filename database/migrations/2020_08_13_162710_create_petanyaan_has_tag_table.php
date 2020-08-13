@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreatePetanyaanHasTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('petanyaan_has_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('username');
-            $table->string('password');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->integer('reputasi');
-            $table->integer('total_upvote');
-            $table->integer('total_downvote');
+            $table->unsignedBigInteger('id_pertanyaan');
+            $table->foreign('id_pertanyaan')->references('id_pertanyaan')->on('pertanyaan');
+            $table->unsignedBigInteger('id_tag');
+            $table->foreign('id_tag')->references('id')->on('tags');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('petanyaan_has_tag');
     }
 }
